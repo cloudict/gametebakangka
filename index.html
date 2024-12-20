@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Tebak Angka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+        }
+        input[type="button"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game Tebak Angka</h1>
+    <p>Tebak angka antara 1 dan 10:</p>
+    <input type="number" id="guess" min="1" max="100" required>
+    <input type="button" value="Tebak" onclick="checkGuess()">
+    <div id="message"></div>
+    <input type="button" value="Mulai Ulang" onclick="startGame()" style="display:none;" id="restartButton">
+
+    <script>
+        let randomNumber;
+        let attempts = 0;
+
+        function startGame() {
+            randomNumber = Math.floor(Math.random() * 10) + 1;
+            attempts = 0;
+            document.getElementById('message').innerText = '';
+            document.getElementById('guess').value = '';
+            document.getElementById('restartButton').style.display = 'none';
+        }
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guess').value);
+            attempts++;
+
+            if (guess < randomNumber) {
+                document.getElementById('message').innerText = "Tebakan Anda terlalu rendah!";
+            } else if (guess > randomNumber) {
+                document.getElementById('message').innerText = "Tebakan Anda terlalu tinggi!";
+            } else {
+                document.getElementById('message').innerText = `Selamat! Anda menebak angka yang benar: ${randomNumber} dalam ${attempts} percobaan.`;
+                document.getElementById('restartButton').style.display = 'inline';
+            }
+        }
+
+        // Mulai permainan saat halaman dimuat
+        window.onload = startGame;
+    </script>
+</body>
+</html>
